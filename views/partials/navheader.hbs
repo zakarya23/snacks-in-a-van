@@ -1,0 +1,30 @@
+
+<!--------------------------- Header navigation block ---------------------------->
+<div id="burger-layer" onclick="ToggleBurger()">
+	<div id="slide-menu">
+		<div class="hscalors"></div> <!-- Spacer for header offset -->
+		<div id="slide-menu-bg">
+		    {{#if user.givenName}}
+				<div id="helloUser">Hi, {{user.givenName}}!</div>
+				<a href = "/customer/account" class="blinks"><img class="bmenuicons bimg" src="/img/van-white-small.png"/>
+				<img class="bmenuicons bhimg" src="/img/van-outlined-white-small.png"/>	<span class="bmenutexts">Account</span></a>
+				<a href = "/customer/logout" class="blinks"><img class="bmenuicons bimg" src="/img/van-white-small.png"/>
+				<img class="bmenuicons bhimg" src="/img/van-outlined-white-small.png"/>	<span class="bmenutexts">Sign Out</span></a>
+			{{else}}
+				<a href = "/customer/login" class="blinks"><img class="bmenuicons bimg" src="/img/van-white-small.png"/>
+				<img class="bmenuicons bhimg" src="/img/van-outlined-white-small.png"/>	<span class="bmenutexts">Log In</span></a>
+				<a href = "/customer/register" class="blinks"><img class="bmenuicons bimg" src="/img/van-white-small.png"/>
+				<img class="bmenuicons bhimg" src="/img/van-outlined-white-small.png"/>	<span class="bmenutexts">Register</span></a>
+			{{/if}}
+		</div>
+	</div>
+</div>
+<header>
+	<div class="header-left">
+		<img id="hamburger" class="hicons hscalors" src="/img/burger.png" onclick="ToggleBurger()"/>
+	</div>
+	<div class="header-mid"><!-- In case we add to the nav bar --></div>
+	<div class="header-right">
+		<img id="logo" class="hscalors" src="/img/nav-logo.png"/>
+	</div>
+</header> 

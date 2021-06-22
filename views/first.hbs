@@ -1,0 +1,22 @@
+
+<script>
+	window.onload = sendLocation; 
+	async function sendLocation() {
+		
+		coord = {"lat":12, "lng":12};
+		const options = {
+			method: 'POST',
+			headers : {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(coord)
+		};
+		fetch('/customer', options)
+		.then((html) => {
+			var parser = new DOMParser(); 
+			var page = parser.parseFromString(html, "text/text/html");
+			console.log(page);
+			
+		})
+	}
+</script>

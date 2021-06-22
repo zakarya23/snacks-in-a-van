@@ -1,0 +1,129 @@
+<script>
+    function checkout(van)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                //do anything on the page here since this means it worked
+                console.log("checkou")
+                window.location.replace("/customer/checkOut/orderConfirmed/"+van)
+            }
+        };
+        console.log('confirmed')
+        xhttp.open("POST", "/customer/checkOut/confirm", true);
+        xhttp.send();
+    }
+    function login(form)
+    {
+        if (!LoginVal(form)) return;
+        
+        email = document.getElementById('email').value
+        password = document.getElementById('password').value
+        console.log(email)
+        var Details = function(email)
+        {
+            this.email = email;
+            this.password = null;
+        }
+        details = new Details(email)
+        console.log(details)
+        details = JSON.stringify(details)
+        console.log(details)
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                //do anything on the page here since this means it worked
+                console.log("login successful")
+                window.location.reload(true);
+            }
+        };
+        xhttp.open("POST", "/customer/checkout/login", true);
+        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.send("email="+email+"&password="+password);
+    }
+</script>
+            {{!-- details = new Details(email)
+            console.log(details)
+            details = JSON.stringify(details)
+            console.log(details)
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function()
+            {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                    //do anything on the page here since this means it worked
+                    console.log("login successful")
+                }
+            };
+            xhttp.open("POST", "/customer/checkout/login", true);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhttp.send("email="+email+"&password="+password);
+        }
+    </script>
+</head> --}}
+
+<div id=checkoutContainer>
+    <div class=order>
+        <h1 style="color: #1AE650;">Your Order</h1>
+            {{!-- Should make into table --}}
+            {{#cart}}
+                <p style="color: black;">${{subtotal}} &nbsp;{{food.name}} &nbsp; {{quantity}}</p>
+            {{/cart}}
+        
+        <h4>Total : ${{cost}}</h4>
+    </div>
+
+    <div class="vanListElement">
+        <div class="vanCalloutCart"></div><div class="vanListLabelCart">{{van}}</div>
+    </div>
+    <div class="vanAddress", style="color: white;">Van Location: {{address}}</div>
+        
+    {{#unless loggedIn}} 
+    <div class="loginContainer">
+        <div class="loginFormContainer">
+            {{#unless error}}
+                <div id="error">Please sign in or register to continue</div>
+            {{/unless}}
+            {{> loginForm }}
+            {{> loginFormButtonsCheckout }}
+            </form>
+
+        {{!-- <div class="vanListElement">
+			<div class="vanListIcontainer">
+				<img class="vanListImg" src="/img/van-white-small.png">
+				<div class="vanListDistanceCart">{{customer.distance}}m</div>
+			</div>
+			<div class="vanCalloutCart"></div><div class="vanListLabelCart">{{van}}</div>
+		</div>
+        <div class="vanAddress", style="color: white;">Van Location: {{address}}</div>
+         
+        {{#unless loggedIn}} 
+        <div class="loginContainer">
+            <div class="loginFormContainer">
+                {{> loginForm }}
+                {{> loginFormButtonsCheckout }}
+                </form>
+            </div> --}}
+        </div>
+    </div>
+    {{/unless}}
+
+    {{#if loggedIn}}
+        <div class="orderstatusContainer">
+            <h3>Ready in 15 minutes or 20% off!</h3>
+            <h3>You can make changes or cancel your order within 10 minutes of submitting.</h3>
+        </div>
+
+        <div id="menuTotal">
+            <a href= ".."><button class="menuTotalButton button-cart"><b>Back</b></button></a>
+            <div style="width: 10%;"></div>
+            <button onclick="checkout('{{van}}')" class="menuTotalButton button-cart"><b>Check Out</b></button>
+        </div>
+        
+    {{/if}}
+
+</div>

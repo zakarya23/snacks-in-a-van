@@ -1,0 +1,30 @@
+{{> formOpen }}
+
+<script>
+    function add_to_cart(itemid, van) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                //do anything on the page here since this means it worked
+                console.log("got here")
+                window.location.replace("/customer/startOrder/"+van);
+            }
+        };
+
+        xhttp.open("POST", "/customer/startOrder/"+van+"/"+itemid+"/add", true);
+        xhttp.send();
+    }
+</script>
+
+<h1 class="formHeading">{{food.name}}</h1>
+	<p><b>Price : </b>${{food.price}}</p>
+	<p><b>Calories: </b>{{food.calories}}</p>
+	<img id="detailFoodImg" src="/img/menu/{{food.photo}}" alt = "{{food.name}}"> 
+	<span class="dialogueButtonLine">
+		<a href = ".."><button class="loginButton">Back</button></a> 
+		<button onclick="add_to_cart('{{food._id}}', '{{van}}')"  class="loginButton">Add to cart!</button>
+	</span>
+</div>
+<div class="dialogueLowSpacer"></div>

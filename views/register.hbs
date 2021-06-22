@@ -1,0 +1,35 @@
+
+{{> formOpen }}
+	<h1 class="formHeading">
+		Register
+	</h1>
+    {{#if badEmail}}
+		<div id="error"> Please enter a valid email</div>
+	{{/if}}
+    {{#if dupEmail}}
+		<div id="error"> Email is already in use</div>
+	{{/if}}
+    {{#if badPassword}}
+		<div id="error"> Passwords must be of length 8 and contain at least one letter and number</div>
+	{{/if}}
+    <form method="POST" action="/customer/register">
+        <div class="formLine">
+			First Name <input class="formField" type="text" name="name"> 
+        </div>
+        <div class="formLine">
+            Last Name <input class="formField" type="text" name="lastName">
+        </div>
+        <div class="formLine">
+            Email <input class="formField" type="text" name="email">
+        </div>
+        <div class="formLine">
+            Password <input class="formField" type="password" name="password">
+        </div>
+			<span class="dialogueButtonLine">
+				<a href= "/customer/startOrder"><button class="loginButton" type="button">Back</button></a>
+				<button class="loginButton" type="submit">Submit</button>
+			</span>
+		</form>
+	</div>
+
+</div>

@@ -1,0 +1,1168 @@
+:root {	
+	/* Brand colours */
+	--colour-green: #1AE650;
+	--colour-green-alpha: rgba(0.101,0.901,0.313,0.0);
+	--colour-white: #FFFFFF;
+	--colour-red: #FF501E;
+	--colour-grey: #808080;
+	--colour-orangewarning: #FF9D1E;
+	
+	--fontfam-body: "Roboto", "Open Sans", Verdana, sans-serif;
+}
+html {
+	font-family: var(--fontfam-body);   
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	user-select: none;
+}
+a{ text-decoration: none;}
+sup { /* Offset superscript so it won't mess with line heights */
+	vertical-align: baseline;
+	position: relative;
+	top: -0.7em;
+	font-size: 50%;
+}
+/*********************** Interstitial logo elements ******************************/
+.introbg-layer {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: +10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: 1;
+}
+.introbg-transition{ 
+	animation: 1.2s ease 0s normal forwards 1 fadeout;
+}
+@keyframes fadeout {
+	0%  { 	opacity: 1; }
+	80% { 	opacity: 1; 
+			pointer-events: auto; }
+	90% { 	pointer-events: none; }
+	100%{ 	opacity: 0; 
+			pointer-events: none; }
+}
+
+#introbg-green{ background-color: var(--colour-green); }
+#intrologo { 
+	user-drag: none;
+	user-select: none;
+	max-width: 100vw; 
+	z-index: +2;
+	opacity: 0;
+	animation: 0.25s ease 0s normal forwards 1 fadein; /*not important but looks nicer on some (early onload) refreshes*/
+}
+@keyframes fadein { 
+	0% { opacity: 0; }
+	10% { opacity: 0; }
+	100%   { opacity: 1; }
+}
+#introbg-bubble {
+	flex-shrink: 0;
+	height: max(0.145vw,0.145vh);/*looks redundant but it's for transition compatibility*/
+	width: max(0.145vw,0.145vh);
+	border-radius: 50%;
+	display: flex;
+	flex-grow:0;
+	justify-content: center;
+	align-items: center;
+}
+.introbg-grow {animation: scaleup 1.0s ease-in 0s 1 normal both;}
+@keyframes scaleup {
+	0%   { 	background-color: var(--colour-green);
+			opacity: 0;
+			height: max(0vw,0vh); 
+			width: max(0vw,0vh); }
+	10%   { background-color: var(--colour-white);
+			opacity: 1;
+			height: max(0vw,0vh); 
+			width: max(0vw,0vh); }
+	100% { 	background-color: var(--colour-white);
+			opacity :1;
+			height: max(145vw,145vh); 
+			width: max(145vw,145vh); 
+			}
+}
+
+/*********************** Nav bar elements ******************************/
+.nav_spacers{
+	height: 5.5vw;
+	min-height: 60px;
+	max-height: 80px;
+	width: auto;
+}
+header {
+	position: fixed;
+	display: flex;
+    flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	background-color: var(--colour-green);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	pointer-events: auto;
+	z-index: +2;
+	box-shadow: 0 0 5px #0005;
+	border-radius: 1vw 1vw 1vw 1vw;
+}
+.header-left { 
+	padding-left: 1.5vw;
+}
+.header-mid { 
+	align-self: center;
+	padding-left: 1.5vw;
+	padding-right: 1.5vw;
+}
+.header-right { 
+	padding-right: 1.5vw;
+	display: flex;
+    align-items: center;
+	justify-content: flex-end;
+	padding-right: 1.5vw;
+}
+/* Hamburger menu elements *******************/
+#burger-layer {
+	position: fixed;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 100%;
+	display: none;
+	pointer-events: none;
+	z-index: +2;
+}
+#hiddenBurger{ display:none; }
+@keyframes fadeoutin {
+	from { background-color: rgba(0,0,0,0.0); }
+	to   { background-color: rgba(0,0,0,0.5); }
+}
+@keyframes fadeinout {
+	from { background-color: rgba(0,0,0,0.5); }
+	to   { background-color: rgba(0,0,0,0.0); }
+}
+.fade-in  { animation: fadeoutin 0.2s ease-out 0s 1 normal both; }
+.fade-out { animation: fadeinout 0.2s ease-out 0s 1 normal both; }
+#slide-menu-bg{
+	background-color: var(--colour-green);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 0.5em;
+	width: 350px;
+	overflow-y: auto;
+	margin-top: 20px;
+	display: flex;
+    flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	color: white;
+	font-size: x-large;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+#slide-menu{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+}
+@keyframes slideoutin {			/* Opacity is just futureproofing for a potentially longer menu */
+	from	{	top: -250px;
+				opacity: 0;				
+			}
+	to	{ 	top: 0px;
+			opacity: 1;				
+		}
+} 
+@keyframes slideinout {
+	from	{ 	top: 0px;
+				opacity: 1;				
+			}
+	to	{	top: -250px;
+			opacity: 0;				
+		}
+}
+.slide-in  { animation: slideoutin 0.2s ease-out 0s 1 normal both; }
+.slide-out { animation: slideinout 0.2s ease-out 0s 1 normal both; }
+#slide-menu hr{
+	width: 50%;
+	margin-left: 35%;
+	margin-right: 25%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+#helloUser{
+	text-align: center;
+}
+.bmenutexts{
+	font-family: var(--fontfam-neat);
+	color: var(--colour-white);
+	text-align: center;
+	display: inline-block;
+	position: absolute;
+	width:50%;
+	padding-top: 0.1em;
+}
+a:hover .bmenutexts { 
+	text-decoration: underline;   
+	text-decoration-color: white;
+}
+.bmenuicons{
+	margin-left: 12%;
+	margin-right: 10%;
+	height: 1em;
+	display: inline-block;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+}
+.blinks{ width: auto; }
+.blinks:hover { 
+	text-decoration: underline;   
+	color: var(--colour-white); 
+}
+.blinks:hover .bimg{ display: none; }
+.bhimg{ display: none; }
+.blinks:hover .bhimg{ display: inline-block; }
+.hscalors{
+	height: 3vw;
+	min-height: 30px;
+	max-height: 48px;
+	width: auto;
+}
+.hicons {
+	border-radius: 4px;
+	border: 1px solid var(--colour-green);
+}
+.hicons:hover {	border: 1px solid white; }
+/* Standard mobile reflex level **************/
+@media screen and (max-width: 640px){ 
+	.header-mid { display: none; }
+	#mobile-search { display: block; }
+	.header-right {	justify-content: flex-end; }
+	.header-left { flex-grow: 1; }
+	#slide-menu-bg{ width: 100vw; }
+	.msearch_hide { display: none; }
+	.msearch_unhide { display: block; }
+}
+/* Contingency for extremely narrow WebKit browsers */
+@media screen and (max-width: 450px){ 
+	#logo{ 
+		min-height: 24px; 
+		margin-left: 1px;
+		margin-right: 1px;
+	}
+	.header-left { padding-left: 4px; }
+	.header-right { padding-tight: 4px; }
+}
+
+/*********************** Proto map elements *****************************
+#mapBG {
+	position: fixed;
+	z-index:-2;
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+	height: 100%;
+    overflow: hide;
+}
+#mapBGimg {
+	display: block;
+	min-height:100%;
+	min-width:100%;
+	object-fit: cover;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}*/
+
+/*********************** Van list elements ******************************/
+.body_container{
+	display: flex;
+	justify-content: center;
+}
+#vanlistSection {
+	white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+	background-color: var(--colour-white);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 1em;
+	padding: 0.5em 2em 1.5em 2em;
+	font-family: var(--fontfam-body);
+}
+#vanlistSection h2{
+	text-align: center;
+	margin: 0;
+	color: var(--colour-green);
+}
+.vanListElement{
+	margin-top: 1em;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.vanListImg{
+	height: 2em;
+}
+.vanListLabel{
+	background-color: var(--colour-green);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 0.5em;
+	padding: 0.25em 2.5em 0.25em 2.5em;
+	flex-grow: 1;
+	color: var(--colour-white);
+	font-weight: bold;
+	font-size: 120%;
+}
+
+.vanListLabelCart{
+	background-color: var(--colour-white);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 0.5em;
+	padding: 0.25em 3em 0.25em 3em;
+	flex-grow: 1;
+	color: var(--colour-green);
+	font-weight: bold;
+	font-size: 120%;
+}
+
+a:hover .vanListLabel {
+	text-decoration: underline;   
+}
+.vanCallout {
+	width: 0; 
+	height: 0; 
+	border-top: 0.45em solid transparent;
+	border-bottom: 0.45em solid transparent; 
+	border-right: 1em solid var(--colour-green);
+	margin-left: 1em;
+	z-index: +1;
+}
+
+.vanCalloutCart {
+	width: 0; 
+	height: 0; 
+	border-top: 0.45em solid transparent;
+	border-bottom: 0.45em solid transparent; 
+	border-right: 1em solid var(--colour-white);
+	margin-left: 1em;
+	z-index: +1;
+}
+.vanListIcontainer { 
+	position: relative;
+	text-align: center; 
+}
+.vanListDistance{
+	position: absolute;
+	top: 40%;
+	left: 55%;
+	transform: translate(-50%, -50%);
+	color: var(--colour-white);
+}
+
+.vanListDistanceCart{
+	position: absolute;
+	top: 40%;
+	left: 55%;
+	transform: translate(-50%, -50%);
+	color: var(--colour-green);
+}
+
+/* Standard mobile reflex level **************/
+@media screen and (max-width: 640px){ 
+	.vanListLabel {
+		font-size: 100%;
+	}
+}
+
+/*********************** Map elements ******************************/
+
+#map {
+	z-index: -1;
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+}
+
+/********************* Account elements *****************************/
+
+.accountContainer{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background-color: var(--colour-green);
+	text-align: center;
+	align-items: center;
+	border: 2px solid black;
+}
+#accountLogo{
+	width: auto;
+	height: 27.5vh;
+}
+.accountFormContainer{
+	background-color: var(--colour-white);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 2.5em;
+	padding: 2em;
+	width: 17em;
+	margin-top: 0;	
+	text-align: center;
+	overflow: auto;
+}
+
+.accountContainer ::-webkit-scrollbar {
+	width: 0.5em;
+	
+}
+
+.accountContainer ::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+	border-radius: 2.5em;
+}
+
+.accountContainer ::-webkit-scrollbar-thumb {
+	background: lightgray;
+	border-radius: 2.5em;
+}
+
+#account_spacer{
+	height: min(0vh, 70vw);
+}
+
+#name {
+	color: #1AE650;
+	text-align: left;
+	font-weight: bold;
+}
+
+
+/*********************** Menu elements ******************************/
+
+#menuContainer{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+    left: 0;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	max-width: 100vh;
+	box-shadow: 0 0 5px #0005;
+	border-radius: 3em 3em 0 0;
+	background-color: var(--colour-white);
+}
+#menuContainer h2{
+	margin: 0em 0 1.5em 0 ;
+	color: var(--colour-green);
+}
+#menuGrid{
+	max-width: 100vh;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-column-gap: 0;
+	grid-row-gap: 5vh;
+
+}
+.menuItem{
+	padding: 0;
+	width: 90%;
+	height: 26vh;
+	margin: 4%;
+	display: flex;
+	flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+.menuImage{
+	max-width:100%;
+	border-radius: 30%;
+	height: auto;
+	max-height: 20vh;
+	
+}
+.menuVanElement{
+	max-width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+}
+.menuLabel{
+	color: var(--colour-green);
+	font-weight: bold;
+	font-size: 120%;
+	justify-content: center;
+}
+a:hover .menuLabel {
+	text-decoration-color: var(--colour-green);
+	text-decoration: underline;   
+}
+
+#menuTotal{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+    left: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 2vh;
+}
+#menuTotalLabel{
+	margin: 0 2em 0 2em;
+	color: var(--colour-green);
+	font-weight: bold;
+	font-size: 125%;
+}
+button {
+	background-color: var(--colour-green);
+	color: var(--colour-white);
+	border: 2px solid var(--colour-green);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 1em;
+	box-shadow: 0 0 5px #0005;
+}
+
+.van-button {
+	background-color: var(--colour-white);
+	color: var(--colour-white);
+	border: 5px solid transparent;
+	outline: none;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin-bottom: 5px;
+	transition-duration: 0.4s;
+}
+
+.van-button:hover {
+	/* text-decoration: underline; */
+	background-color: green;
+	color: white;
+}
+
+.button-cart {
+	background-color: var(--colour-white);
+	color: var(--colour-green);
+	border: 2px solid var(--colour-white);
+	vertical-align: top;
+	text-align: center;
+	text-decoration: none;
+	display: inline-flex;
+	border-radius: 1em;
+	box-shadow: 0 0 5px #0005;
+}
+
+.button-cart:hover {
+	background-color: var(--colour-green);
+	color: var(--colour-white);
+}
+
+button:hover {
+	background-color: var(--colour-white);
+	color: var(--colour-green);
+}
+.menuIncrementButton{
+	width: 2em;
+	padding: 0;
+	font-weight: 900;
+	font-size: 120%;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	height: 3vh;
+	font-size: 2vh;
+}
+.menuTotalButton{
+	font-size: 110%;
+	padding: 0.5em 1em 0.5em 1em;
+	font-weight: 400;
+	width: 8em;
+}
+.menuIncrementors{
+	margin-top: 0.5vh;
+	white-space: nowrap;
+	font-weight: 800;
+	margin-top: 15%;
+	margin-bottom: 10%;
+}
+.menuPrice{
+	margin-top: 0.25em;
+}
+.menuItemLink{
+	margin-bottom:-3vh;
+}
+#menuTotalSpacer{
+	height: 10vh;
+}
+/* Standard mobile reflex level **************/
+@media screen and (max-width: 640px){ 
+
+	#menuContainer h2 {
+		margin-bottom: 0;
+	}
+
+	#menuGrid {
+		grid-row-gap: 0vh;
+	}
+
+	.menuItem {
+		height: auto;
+	}
+
+	.menuIncrementors{
+		margin-top: 20%;
+		margin-bottom: 5%;
+	}
+
+	.menuLabel { 
+		display: flex;
+		font-size: 100%;
+		margin-top: 1em;
+	}
+
+	.menuImage {
+		display: flex;
+		justify-content: center;
+	}
+
+	#menuTotalSpacer{
+		height: 15vh;
+	}
+
+	.menuVanElement{
+		max-width: 45%;
+	}
+	.menuIncrementButton{
+		width: 5vw;
+	}
+	.menuPrice{
+		padding-bottom: 4vw;
+	}
+
+	.menuTotalButton {
+		width: 23vw;
+	}
+}
+/* Low height reflex level **************/
+@media screen and (max-height: 550px){ 
+	.menuLabel { 
+		font-size: 3vh;
+		padding: 0;
+	}
+	.menuTotalButton{
+		font-size: 3vh;
+		padding: 0;
+	}
+	#menuTotalLabel{
+		font-size: 3vh;
+	}
+	.menuItem{
+		font-size: 3vh;
+	}
+	.menuVanElement{
+		max-width: 45%;
+	}
+}
+/* Tiny height reflex level **************/
+@media screen and (max-height: 450px){
+	.menuVanElement{ display: none;}	
+}
+
+/*********************** Checkout page elements ******************************/
+
+#checkoutContainer {
+    background-color: #1AE650;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.order {
+    margin-top: 1vh;
+    background-color: white;
+    text-align: center;
+    border-radius: 2.5em;
+    padding: 0.5em 2em 0.5em 2em;
+    height: auto;
+    width: 17em;
+    box-shadow: 0 0 5px #0005;
+}
+
+.orderstatusContainer {
+	font-size: 100%;
+    font-weight: bold;
+    color: white;
+    padding: 0 0.5em 0 0.5em;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	text-align: center;
+}
+
+/*********************** Dialogue page elements ******************************/
+.loginContainer{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background-color: var(--colour-green);
+	text-align: center;
+	align-items: center;
+	border: 2px solid black;
+}
+#loginLogo{
+	width: auto;
+	height: 27.5vh;
+}
+.loginFormContainer{
+	background-color: var(--colour-white);
+	box-shadow: 0 0 5px #0005;
+	border-radius: 2.5em;
+	padding: 2em;
+	width: 17em;
+	margin-top: 0;	
+	text-align: center;
+}
+
+.loginContainer ::-webkit-scrollbar {
+	width: 0.5em;
+	
+}
+
+.loginContainer ::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+	border-radius: 2.5em;
+}
+
+.loginContainer ::-webkit-scrollbar-thumb {
+	background: lightgray;
+	border-radius: 2.5em;
+}
+
+#login_spacer{
+	height: min(0vh, 70vw);
+}
+.formLine{
+	text-align: right;
+	color: var(--colour-green);
+}
+.loginButton{
+	font-size: 110%;
+	padding: 0.25em 0.75em 0.25em 0.75em;
+	font-weight: 500;
+	min-width: 5em;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-top: 1em;
+}
+.coButton{
+	margin-left: 0.1em;
+	margin-right: 0.1em;
+}
+.formField{
+	border: 2px solid var(--colour-green);
+	border-radius: 1em;
+	height: 2em;
+	margin-bottom: 0.25em;
+	margin-left: 0.5em;
+	padding-left: 1em;
+	width: 12em;
+	outline-width: 0;
+}
+.formFieldInvalid{
+	border: 2px solid var(--colour-red);
+}
+.formHeading{
+	margin: 0 0 1em 0;
+	color: var(--colour-green);
+	font-size: 125%;
+}
+#error{
+	margin: 0 0 1em 0;
+	color: var(--colour-red);
+	font-size: 90%;
+}
+#detailFoodImg{
+	border-radius: 30%;
+	margin-bottom: 1em;
+}
+.dialogueButtonLine{
+	white-space: nowrap;
+}
+.dialogueLowSpacer{
+	min-height: 4vh;
+}
+
+/********************* Vendor Common *********************/
+.vendorHeader{
+	position: fixed;
+	z-index: +5;
+}
+#vendorBody{
+	background-color: var(--colour-green);
+}
+.vendorHeader{
+	background-color: var(--colour-red);
+	width: 100%;
+	height: 15vh;
+	display: flex;
+	justify-content: space-between;
+}
+#vendorLogo{
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 10px;
+	height: 15vh;
+	width: 15vh;
+}
+.vendorFrame{
+	box-sizing: border-box;
+	width: 100vw;
+	height: 85vh;
+	border: 5px solid var(--colour-red);
+	border-radius: 13px;
+	position: fixed;
+	bottom: 0;
+	pointer-events: none;
+}
+.vendorFrameSharp{
+	border-width: 5px;
+	border-radius: 0px;
+	pointer-events: none;
+}
+.vButton{
+	font-size: min(100%, 1.75vw);
+	font-weight: 800;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.vBBreak{
+	white-space: nowrap;
+}
+.vButtonOpen{
+	min-height: 8vh;
+}
+.vButtonClose{
+	min-height: 8vh;
+	background-color: var(--colour-red);
+	border: 2px solid var(--colour-red);
+}
+.vButtonPast{
+	height: 4vh;
+	max-width: 10em;
+	cursor: pointer;
+}
+#vLeft{
+	width: 25%;
+}
+#vMid{
+	width: 50%;
+}
+#vRight{
+	width: 25%;
+	text-align: right;
+	overflow: visible;
+}
+.vSpan{
+	width: 100%;
+}
+.vControlColumn{
+	margin-top: auto;
+	margin-bottom: auto;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+.vVanName{
+	white-space: nowrap;
+	text-align: right;
+	overflow: visible;
+	color: var(--colour-grey);
+	direction: rtl;
+}
+.vControlLabel{
+	font-size: min(135%, 3vw);
+}
+.vLocField{
+	color: var(--colour-green);
+	white-space: nowrap;
+	font-size: 135%;
+}
+#vendorLocate{
+	min-height: 3vh;
+	margin-top: 3px;
+	margin-bottom: 0;
+	margin-left: 0;
+	width: 95%;
+}
+.vendorControls{
+	background-color: var(--colour-white);
+	width: 100%;
+	height: 12vh;
+	margin: 15px;
+	border-radius: 10px;
+	box-shadow: 0 0 5px #000a;
+	display: flex;
+	justify-content: space-around;
+}
+/********************* Vendor Past Orders *********************/
+#vPastHeaderSpan{
+	font-size: min(200%, 5vw);
+	color: var(--colour-green);
+	width: 50%;
+	text-align: center;
+	padding-left: 11%;
+	padding-right: 11%;
+}
+#past-header{
+	display: none;
+}
+#past-menu{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+
+}
+#past-container{
+	width: 100vw;
+	height: 83vh;
+	border-radius: 13px;
+	background-color: var(--colour-white);
+	display: none;
+	padding-top: 15px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+#past-spacer{
+	height: 15vh;
+}
+/********************* Vendor Orders (default: past orders) *********************/
+.vOrder{
+	border: 1px solid var(--colour-green);
+	border-radius: 1em;
+	box-shadow: 0 0 3px #000a;
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+	text-align: center;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vOrderDetails{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: baseline;
+}
+.vOrderExpand{
+	width: 100%;
+	font-color: var(--colour-black);
+	display: none;
+}
+.vOrderExpanded{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding:1em;
+}
+.vOColumn{
+	width: 8em;
+	min-width: 4em;
+}
+.vO-commented{
+	max-width: 3em;
+	width: 3em;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.vO-uncommented{
+	visibility: hidden;
+}
+.vO-name{
+	width: 100%;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 20px;
+	font-size: min(200%, 4vw);
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.vO-status{
+	font-size: min(80%, 2vw);
+	color: var(--colour-green);
+	font-weight: 800;
+}
+.vO-discount{
+	font-size: min(75%, 2vw);
+	color: var(--colour-red);
+	font-weight: 800;
+}
+.vO-itemcount{
+	font-size: 75%;
+}
+.vO-timer{
+	color: var(--colour-green);
+	font-weight: 800;
+}
+.vO-date{ font-size: 80%; }
+.vO-rating{
+	font-size: min(80%, 1.5vw);
+}
+.vO-discounted{
+	color: var(--colour-red);
+	border-color: color: var(--colour-red);
+}
+.vO-cancelled{
+	color: var(--colour-grey);
+	border-color: color: var(--colour-grey);
+}
+.vButtonUnmark{
+	white-space: normal;
+	background-color: var(--colour-red);
+	border: 2px solid var(--colour-red);
+	height: 6em;
+	width: 8EM;
+}
+.vO-feedback{
+	font-size: 80%;
+	width: 20vw;
+	margin-right: 2em;
+}
+.vO-feedbox{
+	white-space: normal;
+	box-shadow: 0 0 3px #000a;
+	border-radius: 1em;
+	width: 80%;
+	height: 10em;
+	margin-top: 0.5em;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1em;
+	font-size: 70%;
+	overflow-y: auto;
+}
+.vO-orderItems{
+	width: 50vw;
+	display: flex;
+	flex-flow: column wrap;
+	font-size: min(125%, 4vw);
+	justify-content: flex-start;
+	height: 5em;
+	text-align: left;
+	align-content: space-around;
+}
+.vO-unmark{
+	width: 10vw;
+}
+.vO-smaller{
+	font-size: 80%;
+}
+.filterLabel{
+	font-size: 60%;
+}
+.pastFiltered{
+	display: none;
+}
+/********************* Vendor Open Orders *********************/
+#orders-menu{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	z-index: -5;
+}
+#orders-container{
+	width: 100vw;
+	height: 83vh;
+	border-radius: 13px;
+	background-color: var(--colour-white);
+	padding-top: 15px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+#orders-spacer{
+	height: 15vh;
+}
+.vanHeaderOpen{
+	background-color: var(--colour-green);
+}
+.vanFrameOpen{
+	border: 5px solid var(--colour-green);
+}
+.vOpen-timer{
+	font-size: 150%;
+}
+.vOpen-total{
+	font-size: 150%;
+	color: var(--colour-grey);
+}
+.vOpen-itemcount{
+	font-size: 140%;
+}
+.vOpen-column{
+	align-self: center;
+}
+.vOrder-timerHours{
+	font-size: 1.5vw;
+}
+.vOrder-timerWarning{
+	color: var(--colour-orangewarning);
+}
+.vOrder-timerDiscount{
+	color: var(--colour-red);
+}
+.vButtonOrders{
+	white-space: normal;
+	height: 3em;
+	width: 8em;
+	min-height: 3em;
+	min-width:	8em;
+	font-size: 1em;
+}
+.vButtonPickup{
+	background-color: var(--colour-red);
+	border: 2px solid var(--colour-red);
+}
+.vButtonUnready{
+	opacity: 0.5;
+	pointer-events: none;
+}
+.vButtonReady{
+	background-color: var(--colour-green);
+	border: 2px solid var(--colour-green);
+}

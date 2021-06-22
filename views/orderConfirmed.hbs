@@ -1,0 +1,94 @@
+<meta http-equiv="refresh" content="60">
+
+<script>
+    function cancel()
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+                //do anything on the page here since this means it worked
+                window.location.replace("/customer/startOrder")
+            }
+        };
+        console.log('confirmed')
+        xhttp.open("POST", "/customer/cancelOrder", true);
+        xhttp.send();
+    }
+
+    var countDownTime = {{cancelTime}}
+    var discountTime = {{discountTime}}
+
+    var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownTime - now;
+        var discountedDistance = discountTime - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var cancelMinutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var cancelSeconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var discountMinutes = Math.floor((discountedDistance % (1000 * 60 * 60)) / (1000 * 60));
+        var discountSeconds = Math.floor((discountedDistance % (1000 * 60)) / 1000);
+
+        if (distance > 0)
+        {
+            document.getElementById("timer").innerHTML = ("You can make changes or cancel your order within within: " + cancelMinutes + "m " + cancelSeconds + "s ");
+        }
+        else if (discountedDistance > 0)
+        {
+            document.getElementById("timer").innerHTML = ("You get a discount if your order is not ready in: " + discountMinutes + "m " + discountSeconds + "s ");
+        }
+        else{
+            document.getElementById("timer").innerHTML = ("Discount Applied!");
+        }
+        
+    }, 1000);
+
+</script>
+
+<div id=checkoutContainer>
+    <div class=order>
+        <h1 style="color: #1AE650;">Your Order</h1>
+        <h1>{{fulfilled}}</h1>
+            {{!-- Should make into table --}}
+            {{#cart}}
+                <p style="color: black;">${{subtotal}} &nbsp;{{food.name}} &nbsp; {{quantity}}</p>
+            {{/cart}}
+        
+        <br><br>
+        <h4>Total : ${{cost}}</h4>
+    </div>
+
+    <div class="vanListElement">
+        {{!-- <div class="vanListIcontainer">
+            <img class="vanListImg" src="/img/van-white-small.png">
+            <div class="vanListDistanceCart">{{van.distance}}m</div>
+        </div> --}}
+        <div class="vanCalloutCart"></div><div class="vanListLabelCart">{{van.name}}</div>
+    </div>
+    <div class="orderstatusContainer">
+        <h3>Order Confirmed!</h3>
+        <h3 id = "timer">You can make changes or cancel your order within within: 10m 0s</h3>
+        {{#if order.fulfilled}}
+        <h3>Order is waiting for pickup!</h3>
+        {{else}}
+        <h3>Order is being prepared!</h3>
+        {{/if}}
+    </div>
+
+
+        {{#if cancellable}}
+            <div id="menuTotal">
+                <button class="menuTotalButton button-cart" onclick="cancel()"><b>Cancel Order</b></button>
+                <div style="width: 10%;"></div>
+                <a href= "/customer/startOrder/{{van.name}}"><button class="menuTotalButton button-cart"><b>Modify Order</b></button></a>
+            
+            </div>
+        {{/if}}
+</div>
+    

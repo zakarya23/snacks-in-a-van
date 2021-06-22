@@ -1,0 +1,55 @@
+<template id="orderTemplate{{#if openOrder}}-open{{/if}}">
+	<div class="vOrder" id="oid-" onclick="ExpandOrder(this)">
+		<div class="vOrderDetails">
+			<div class="vOColumn">
+				<div class="vO-orderLabel">Order</div>
+				<div class="vO-number">#90</div>
+			</div>
+			<div class="vOColumn">
+{{#if openOrder}}
+				<div class="vOpen-timelabel">Time:</div>
+{{else}}
+				<div class="vO-date">24/03/2021</div>
+{{/if}}
+				<div class="vO-time">15:20pm</div>
+			</div>
+			<div class="vOColumn vO-name">"Ludwig"</div>
+			<div class="vOColumn {{#if openOrder}}vOpen-column{{/if}}">
+				<div class="vO-itemcount {{#if openOrder}}vOpen-itemcount{{/if}}">8 <span class="vO-smaller">items</span></div>
+{{#if openOrder}}
+			</div>
+			<div class="vOColumn vOpen-column">
+{{/if}}
+				<div class="vO-total {{#if openOrder}}vOpen-total{{/if}}"><sup>$</sup>24<sup>.50</sup></div>
+			</div>
+			<div class="vOColumn">
+				<div class="vO-status">PICKED UP</div>
+				<div class="vO-discount">Discounted</div>
+			</div>
+			<div class="vOColumn {{#if openOrder}}vOpen-column{{/if}}">
+{{#unless openOrder}}<div class="vO-rating">&nbsp;</div>{{/unless}}
+				<div class="vO-timer {{#if openOrder}}vOpen-timer{{/if}}">12:45</div>
+			</div>
+{{#unless openOrder}}<div class="vO-commented">💬</div>{{/unless}}
+		</div>
+		<div class="vOrderExpand">
+			<div class="vOColumn vO-unmark">
+				{{#if openOrder}}
+					<button class="vButton vButtonOrders vButtonPickup" onclick="">Mark PICKED UP</button>
+				{{else}}
+					<button class="vButton vButtonUnmark" onclick="">Unmark PICKED UP &amp; move to orders</button>
+				{{/if}}
+			</div>
+			<div class="vOColumn vO-orderItems">
+			</div>
+			<div class="vOColumn {{#unless openOrder}}vO-feedback{{/unless}}">
+				{{#if openOrder}}
+					<button class="vButton vButtonOrders vButtonReady" onclick="">Mark READY</button>
+				{{else}}
+					User Feedback
+					<div class="vO-feedbox"></div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>

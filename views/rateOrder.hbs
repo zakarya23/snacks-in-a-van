@@ -1,0 +1,28 @@
+{{> navheader }}
+{{> rateForm }}        
+		<h1 class="formHeading">
+            Rate your experience
+        </h1>
+		<form method="POST" action="/customer/rateOrder">
+            <div class="rate">
+                5<input type="radio" value="5" name="rating"/>
+                4<input type="radio"  value="4" name="rating"/>
+                3<input type="radio"  value="3" name="rating"/>
+                2<input type="radio" value="2" name="rating"/>
+                1<input type="radio" value="1" name="rating"/>
+            </div>
+            <br>
+			<div class="formLine">
+				Comment 
+                <input class="" type="text" name="comment">
+			</div>
+    
+			<br>
+			<span class="dialogueButtonLine">
+				<a href= "/customer"></a>
+				<button class="loginButton" type="submit">Submit Feedback</button>
+			</span>
+            <button class="menuTotalButton button-cart"><b>Back to Map</b></button>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,66 @@
+<div class="accountContainer">
+	<div id="account_spacer"></div>
+	<span><img id="accountLogo" src="/img/form-logo.png" /></span>
+	<div class="accountFormContainer">
+        <h1 class="formHeading">
+            Account Details
+        </h1>
+
+        {{#if badPassword}}
+            <div id="error"> Passwords must be of length 8 and contain at least one letter and number</div>
+        {{/if}}
+        {{#if passwordNotMatch}}
+            <div id="error"> Passwords do not match</div>
+        {{/if}}
+        {{#if badEmail}}
+            <div id="error"> Please enter a valid email</div>
+        {{/if}}
+        {{#if takenEmail}}
+            <div id="error"> Email is already in use</div>
+        {{/if}}
+        
+
+        <form method="POST" action="/customer/account">
+            <div id="name">First Name: {{user.givenName}}</div>
+            <br />
+            <div class="formLine">
+                New First Name <input class="formField" type="text" name="name">
+                <button class="loginButton" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <form method="POST" action="/customer/account">
+            <br />
+            <div id="name">Last Name: {{user.familyName}}</div>
+            <br />
+            <div class="formLine">
+                New Last Name <input class="formField" type="text" name="lastname">
+                <button class="loginButton" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <form method="POST" action="/customer/account">
+            <br />
+            <div id="name">Email: {{user.email}}</div>
+            <br />
+            <div class="formLine">
+                New Email <input class="formField" type="text" name="email">
+                <button class="loginButton" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <form method="POST" action="/customer/account">
+            <br />
+            <br />
+            <div class="formLine">
+                Old Password <input class="formField" type="password" name="password"><br />
+                New Password <input class="formField" type="password" name="newpassword"> 
+                <button class="loginButton" type="submit">Submit</button>
+            </div>
+            <br />
+                <span>
+                    <a href= "/customer/startOrder"><button class="loginButton" type="button">Back</button></a>
+                </span>
+        </form>
+    </div>  
+</div>

@@ -1,0 +1,75 @@
+<script>
+	
+		getUserLocation();
+
+		// Accessing current live location of user 
+		function getUserLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(loc);	
+			}
+			else {
+				alert("Location not found!");
+			}
+		};
+
+		async function loc(position) {
+			var coord = {"lat":position.coords.latitude, "lng": position.coords.longitude};
+			const options = {
+				method: 'POST',
+				headers : {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(coord)
+			};
+			console.log('aa');
+			const sentBack = await fetch('/vendor/vanLocation', options)
+			const data = await sentBack.json(); 
+    	}; 
+		
+</script>
+
+<div class="vendorHeader {{#if vanOpen}}vanHeaderOpen{{/if}}">
+	<img id="vendorLogo" src="/img/wide-logo.png"/>
+	<div id="vendor-controls" class="vendorControls">
+		<div id="vLeft" class="vControlColumn">
+		{{#if vanOpen}}
+			<a class="vSpan" href= "/vendor/home/{{van.name}}"><button class="vButton vButtonClose"><span class="vBBreak">Remove from map </span><br><span class="vBBreak">and close</span> <span class="vBBreak">for business</span></button></a>
+		{{else}}
+			<button class="vButton vButtonOpen" type="submit" form="location"><span class="vBBreak">Apply geo-location</span><br><span class="vBBreak">and open</span> <span class="vBBreak">for business</span></button></form>
+		{{/if}}
+		</div>
+		<div id="vMid" class="vControlColumn">
+			<div class="vSpan vLocField vControlLabel">&nbsp;Location Label</div>
+			<div class="vSpan">
+				<form method="post" action="/vendor/outStandingOrders/{{van.name}}" id = "location">
+					<input type="text" name="address" class="formField" id="vendorLocate" value="{{van.address}}"{{#if vanOpen}}disabled{{/if}}>
+				</form>
+			</div>
+		</div>
+		<div id="vRight" class="vControlColumn">
+			<div class="vSpan vVanName vControlLabel">"{{van.name}}"&nbsp;</div>
+			<div class="vSpan"><button class="vButton vButtonPast" onclick="TogglePastOrders()">Past Orders</button></div>
+		</div>
+	</div>
+	<div id="past-header" class="vendorControls">
+		<div id="vPastHeaderSpan" class="vControlColumn">Past Orders<br>
+		<span class="filterLabel">Filter by name:</span> <input type="text" class="formField filterTest" oninput="pastFilter(this)">
+		</div>
+		<div id="vRight" class="vControlColumn">
+			<div class="vSpan vVanName vControlLabel">&nbsp;</div>
+			<div class="vSpan"><button class="vButton vButtonPast" onclick="TogglePastOrders()">Back</button></div>
+		</div>	
+	</div>
+	<div class="vendorFrame vendorFrameSharp {{#if vanOpen}}vanFrameOpen{{/if}}"></div>
+	<div class="vendorFrame {{#if vanOpen}}vanFrameOpen{{/if}}"></div>
+</div> 
+
+<div id="past-menu">
+	<div id="past-spacer"></div>
+	<div id="past-container">
+		{{> templateOrders }}
+	</div>
+</div>
+
+	
+	
